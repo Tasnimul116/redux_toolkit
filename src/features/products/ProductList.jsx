@@ -15,6 +15,7 @@ const ProductList = ({ onHandleEdit}) => {
   },[dispatch])
 
 const handleEdit=(product)=>{
+    navigate(`/products/edit/${product.id}`);
     onHandleEdit(product);
   } 
 

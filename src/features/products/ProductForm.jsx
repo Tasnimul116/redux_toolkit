@@ -4,7 +4,7 @@ import { addProduct, updateProduct } from "./productSlice";
 import { nanoid } from "nanoid";
 import { use } from "react";
 
-const ProductForm = ({ onHandleEditProduct, isEdit }) => {
+const ProductForm = () => {
   const dispatch = useDispatch();
 
   const [product, setProduct] = useState({

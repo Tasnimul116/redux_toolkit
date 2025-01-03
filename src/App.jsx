@@ -4,6 +4,7 @@ import ProductForm from './features/products/ProductForm';
 import ProductList from './features/products/ProductList';
 import ProductDetails from './features/products/ProductDetails';
 import './App.css';
+import ProductUpdate from './features/products/ProductUpdate';
 
 function App() {
   const [editProduct, setEditProduct] = useState(null);
@@ -31,13 +32,15 @@ function App() {
         <Routes>
           <Route
             path="/add-product"
-            element={<ProductForm onHandleEditProduct={editProduct} isEdit={isEdit} />}
+            element={<ProductForm  />}
           />
           <Route
             path="/"
             element={<ProductList onHandleEdit={handleProductEdit} />}
           />
           <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/products/edit/:id" element={<ProductUpdate onHandleEditProduct={editProduct} isEdit={isEdit}/>} />
+          
         </Routes>
       </div>
     </Router>
