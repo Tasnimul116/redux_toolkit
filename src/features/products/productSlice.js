@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL ="http://localhost:3000/products";
+const port = import.meta.env.VITE_JSON_PORT;
 
 const initialState = {
     products:[],
@@ -10,22 +10,22 @@ const initialState = {
 }
 export const fetchProducts =  createAsyncThunk('products/fetchProducts', async()=>{
    
-    const res = await axios.get(BASE_URL);
-    return res.data;
+    const res = await axios.get(port);
+    return res.data ;
 })
 
 export const deleteProduct =createAsyncThunk('products/deleteProduct',async(id)=>{
-    const res= await axios.delete(`${BASE_URL}/${id}`);
+    const res= await axios.delete(`${port}/${id}`);
     return id;
 })
 
 export const addProduct = createAsyncThunk('products/addProduct',async(product)=>{
-    const res = await axios.post(BASE_URL,product);
+    const res = await axios.post(port,product);
     return res.data;
 })
 
 export const updateProduct=createAsyncThunk('products/updateProduct',async(product)=>{
-    const res = await axios.put(`${BASE_URL}/${product.id}`,product);
+    const res = await axios.put(`${port}/${product.id}`,product);
     return res.data;
 })
 
