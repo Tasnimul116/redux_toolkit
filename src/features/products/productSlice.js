@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const port = import.meta.env.VITE_JSON_PORT;
+// const port = import.meta.env.VITE_JSON_PORT;
+const port = "http://localhost:3000/products";
 
 const initialState = {
     products:[],
@@ -43,7 +44,9 @@ export const productSlice = createSlice({
             state.products = state.products.filter((product)=>
                 product.id !== action.payload 
             )
-        }).addCase(addProduct.fulfilled,(state,action)=>{
+        }).addCase(deleteProduct.rejected, (state, action) => {
+            state.error = action.payload || "Failed to delete product";
+          }).addCase(addProduct.fulfilled,(state,action)=>{
             state.products.push(action.payload);}).addCase(updateProduct.fulfilled,(state,action)=>{
                 const index = state.products.findIndex((product)=>product.id === action.payload.id);
                 state.products[index] = action.payload;

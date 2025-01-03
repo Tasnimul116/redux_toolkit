@@ -5,8 +5,9 @@ import { useParams } from "react-router-dom";
 
 const ProductUpdate = ({ onHandleEditProduct, isEdit }) => {
     const dispatch = useDispatch();
-    const { id } = useParams();
+ 
 
+      
     const [product, setProduct] = useState({
         name: "",
         price: "",
