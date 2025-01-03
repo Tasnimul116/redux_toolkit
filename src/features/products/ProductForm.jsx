@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addProduct, updateProduct } from "./productSlice";
 import { nanoid } from "nanoid";
-import { use } from "react";
+
 
 const ProductForm = () => {
   const dispatch = useDispatch();
@@ -19,26 +19,10 @@ const ProductForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isEdit) {
-      dispatch(updateProduct({ ...product, id: onHandleEditProduct.id }));
-    } else {
-      dispatch(addProduct({ ...product, id: nanoid() }));
-    }
+    dispatch(addProduct({ ...product, id: nanoid() }));
     setProduct({ name: "", price: "", description: "" });
   };
 
-  useEffect(() => {
-    if (isEdit) {
-      setProduct(
-        {
-          name: onHandleEditProduct.name,
-          price: onHandleEditProduct.price,
-          description: onHandleEditProduct.description,
-        },
-        
-      );
-    }
-  },[onHandleEditProduct]);
 
 
   return (
@@ -54,6 +38,15 @@ const ProductForm = () => {
           onChange={handleChange}
           required
         />
+        <label htmlFor="description">Description</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value={product.description}
+          onChange={handleChange}
+          required
+        />
         <label htmlFor="price">Price</label>
         <input
           type="text"
@@ -63,7 +56,7 @@ const ProductForm = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">{isEdit ? "Update" : "Add Product"}</button>
+        <button type="submit">Add Product</button>
        
       </form>
     </div>
