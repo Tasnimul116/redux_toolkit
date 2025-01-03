@@ -1,33 +1,58 @@
-import { useState } from 'react'
-
-import './App.css'
-import ProductShow from './features/products/ProductShow'
-import ProductForm from './features/products/ProductForm'
+import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import ProductForm from './features/products/ProductForm';
+import ProductList from './features/products/ProductList';
+import ProductDetails from './features/products/ProductDetails';
+import './App.css';
 
 function App() {
-  const [isEdit, setIsEdit] = useState(false)
-  const [productEdit, setProductEdit] = useState(null)
+  const [editProduct, setEditProduct] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
-
-  const handleProductEdit= (product)=>{
-    setIsEdit(true)
-    setProductEdit(product)
-    // console.log(product)
-  }
-
-  const resetForm = ()=>{
-    setIsEdit(false)
-    setProductEdit(null)
-  }
-  
+  const handleProductEdit = (product) => {
+    setEditProduct(product);
+    setIsEdit(true);
+  };
 
   return (
-    <div>
-      <ProductForm productToEdit={productEdit} isEdit={isEdit} resetForm={resetForm} />
-      <ProductShow onHandleProductEdit={handleProductEdit} />
-      {/* onhandleProductEdit is the prop that we are passing to ProductShow component */}
-    </div>
-  )
+    <Router>
+      <div className='App'>
+        {/* Navbar */}
+        <nav style={styles.navbar}>
+          <Link to="/" style={styles.navLink}>
+            Product List
+          </Link>
+          <Link to="/add-product" style={styles.navLink}>
+            Add Product
+          </Link>
+        </nav>
+
+        {/* Main Routes */}
+        <Routes>
+          <Route
+            path="/add-product"
+            element={<ProductForm onHandleEditProduct={editProduct} isEdit={isEdit} />}
+          />
+          <Route
+            path="/"
+            element={<ProductList onHandleEdit={handleProductEdit} />}
+          />
+          <Route path="/products/:id" element={<ProductDetails />} />
+        </Routes>
+      </div>
+    </Router>
+  );
 }
 
-export default App
+const styles = {
+  navbar: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: '10px',
+    backgroundColor: '#333',
+    color: '#fff',
+  },
+};
+
+export default App;
